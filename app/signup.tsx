@@ -5,7 +5,7 @@ import { FormBody } from '@/components/FormBody'
 import { router } from 'expo-router'
 import { FormBodyProps } from '@/components/FormBody'
 import { validateForm, required, isEmail } from '@/utils/formvalidation'
-import { signupRequest } from '@/service/userServices'
+import { signupRequest, SignupResponse } from '@/service/userServices'
 
 const SignupScrean = () => {
 
@@ -42,10 +42,11 @@ const SignupScrean = () => {
 		}
 	};
 
-  const handleSignUp = () => {
-		const newErrors = validateForm(signupData, validationRules);
-		setErrors(newErrors as { phoneNumber: string; name: string; email: string; password: string; });
-
+  const handleSignUp = async () => {
+		//const newErrors = validateForm(signupData, validationRules);
+    const newErrors = ""
+		//setErrors(newErrors as { phoneNumber: string; name: string; email: string; password: string; });
+    // const response : SignupResponse = await signupRequest(signupData)
 		if (Object.keys(newErrors).length === 0) {
 			// Form is valid, proceed with login
       console.log('Sign up button pressed')
@@ -53,8 +54,11 @@ const SignupScrean = () => {
       console.log('Name:', signupData.name)
       console.log('Email:', signupData.email)
       console.log('Password:', signupData.password)
-      const response = signupRequest(signupData)
-      if(response.status === 200){
+
+      console.log("merhaba")
+      const response : number = await signupRequest(signupData)
+      console.log("nasılsın")
+      if(response == 200){
         router.push('./login');
       } else {
         console.log('SignupUser: Form is not valid');

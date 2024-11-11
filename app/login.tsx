@@ -24,17 +24,17 @@ const login = () => {
 		password: [required('Password')],
 	};
 
-	const handleLogin = () => {
+	const handleLogin = async () => {
 		const newErrors = validateForm(loginData, validationRules);
 		setErrors(newErrors as { email: string; password: string; });
 
 		if (Object.keys(newErrors).length === 0) {
 			// Form is valid, proceed with login
-			const response = loginRequest(loginData);
+			const response : number = await loginRequest(loginData);
 			console.log('Login button pressed');
 			console.log('Email:', loginData.email);
 			console.log('Password:', loginData.password);
-			if(response.status === 200){
+			if(response === 200){
 				console.log('Login successful');
 				router.push('./home');
 			} else {
