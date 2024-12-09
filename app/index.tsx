@@ -5,6 +5,7 @@ import PawInformationDetailed from '../app/pawInformationDetailed';
 import PawList from '../app/pawList';
 import Welcome from '../app/welcome'; // Import the Welcome component
 import { ImageSourcePropType } from 'react-native';
+ 
 
 export type RootStackParamList = {
   Welcome: undefined; // Add Welcome to the stack param list
@@ -19,7 +20,9 @@ export type RootStackParamList = {
   };
 };
 
+
 const Stack = createStackNavigator<RootStackParamList>();
+
 
 const Index = () => {
   return (
