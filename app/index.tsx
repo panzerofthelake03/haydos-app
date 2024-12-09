@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer, NavigationIndependentTree } from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import PawInformationDetailed from '../app/pawInformationDetailed';
 import PawList from '../app/pawList';
 import Welcome from '../app/welcome'; // Import the Welcome component
@@ -21,18 +21,20 @@ export type RootStackParamList = {
 };
 
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 
 const Index = () => {
   return (
-    <NavigationContainer independent={true}>
-      <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Welcome" component={Welcome} />
-        <Stack.Screen name="PawList" component={PawList} />
-        <Stack.Screen name="Details" component={PawInformationDetailed}/> 
-      </Stack.Navigator>
-    </NavigationContainer>
+    <NavigationIndependentTree>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Welcome" component={Welcome} />
+          <Stack.Screen name="PawList" component={PawList} />
+          <Stack.Screen name="Details" component={PawInformationDetailed}/> 
+        </Stack.Navigator>
+      </NavigationContainer>
+    </NavigationIndependentTree>
   );
 };
 

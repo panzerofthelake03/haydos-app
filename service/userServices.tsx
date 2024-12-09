@@ -1,7 +1,7 @@
 //TODO: implement user services and API connection later.
 import axios from "axios";
-const API_URL = "http://10.8.34.229:8088/api/v1/user/signUp";
-const Token = ""
+const API_URL = "http://10.8.58.79:8088";
+const TOKEN = "8f2a3d1c5e47c6b1a4b9f7e9d2c0a6f3d8b1e4f9a2c6d7b3f5a8c1e7b9d4f2a3"
 
 interface User {
     name?: string;
@@ -24,12 +24,18 @@ const tempusers: User[] = [
 
 //TODO: when the service part finished is the backend for this rewrite here...
 export const loginRequest = async (userCredentials: User): Promise<number>=> {
-  try {  
-    const response = await axios.post(API_URL, {
+  try {
+    const response = await axios.post(API_URL + "/auth/login", {
         id: 1,
         email: userCredentials.email,
         password: userCredentials.password,
-      });
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      }
+      );
       return response.status;
   }
   catch (error) {
