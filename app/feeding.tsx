@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-na
 import MapView, { Marker } from 'react-native-maps';
 import { mapstyles } from '@/constants/Styles'
 import Appbar from '@/components/Appbar';
-import { listFeedingLocations } from '@/service/feedingLocationServices';
+import {  listFeedingLocations } from '@/service/feedingLocationServices';
 import {volunteerRequest, isVolunteered ,VolunteerRequestint, isVolunteeredint, feedingDoneRequestint, feedingDoneRequest} from "@/service/volunteerServices"
 import * as Location from 'expo-location';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -79,6 +79,7 @@ const FeedingScreen = () => {
 
   const getFeedingLocations = async () => {
     try {
+      //eski lokasyonlarda isuser vardı yenleridene yok kontrol edilmeli
       const response = await listFeedingLocations();
       setMarkers(response.data);
       console.log("Feeding locations fetched:", response.data);

@@ -5,7 +5,7 @@ import { FormBody } from '@/components/FormBody'
 import { router } from 'expo-router'
 import { FormBodyProps } from '@/components/FormBody'
 import { validateForm, required, isEmail } from '@/utils/formvalidation'
-import { signupRequest, SignupResponse } from '@/service/userServices'
+import { signupRequest, Signup_LoginResponse,  SigninCredentials} from '@/service/userServices'
 
 const SignupScrean = () => {
 
@@ -43,23 +43,21 @@ const SignupScrean = () => {
 	};
 
   const handleSignUp = async () => {
-		//const newErrors = validateForm(signupData, validationRules);
-    const newErrors = ""
-		//setErrors(newErrors as { phoneNumber: string; name: string; email: string; password: string; });
-    // const response : SignupResponse = await signupRequest(signupData)
+		const newErrors = validateForm(signupData, validationRules);
+    //const newErrors = ""
+		setErrors(newErrors as { phoneNumber: string; name: string; surname: string; email: string; password: string; });
 		if (Object.keys(newErrors).length === 0) {
-			// Form is valid, proceed with login
+			// Form is valid, proceed with signup
+      const response : Signup_LoginResponse = await signupRequest(signupData)
       console.log('Sign up button pressed')
       console.log('Phone Number:', signupData.phoneNumber)
       console.log('Name:', signupData.name)
       console.log('Email:', signupData.email)
       console.log('Password:', signupData.password)
-
-      console.log("merhaba")
-      const response : number = await signupRequest(signupData)
-      console.log("nasılsın")
-      if(response == 200){
-        router.push('./login');
+      if(response.status == 200){
+        console.log('signup successful');
+        setErrorlabel("");
+        router.push('./home');
       } else {
         console.log('SignupUser: Form is not valid');
         //once the services are ready, change the error label to the actual error message
@@ -87,7 +85,7 @@ const SignupScrean = () => {
     {
       iconName: 'person',
       placeholder: 'John Doe',
-      pretext: 'Your Name & Lastname',
+      pretext: 'Your Name',
       secureTextEntry: false,
       value: signupData.name,
       onChangeText: handleInputChange('name'),

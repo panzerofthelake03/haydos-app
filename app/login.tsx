@@ -4,7 +4,7 @@ import { router } from 'expo-router'
 import Appbar from '@/components/Appbar'
 import { FormBody, FormBodyProps } from '@/components/FormBody'
 import { validateForm, required, isEmail } from '@/utils/formvalidation'
-import { loginRequest } from '@/service/userServices'
+import { loginRequest, Signup_LoginResponse } from '@/service/userServices'
 
 const login = () => {
 	const [loginData, setloginData] = useState({
@@ -30,12 +30,13 @@ const login = () => {
 
 		if (Object.keys(newErrors).length === 0) {
 			// Form is valid, proceed with login
-			const response : number = await loginRequest(loginData);
+			const response : Signup_LoginResponse = await loginRequest(loginData);
 			console.log('Login button pressed');
 			console.log('Email:', loginData.email);
 			console.log('Password:', loginData.password);
-			if(response === 200){
+			if(response.status === 200){
 				console.log('Login successful');
+				setErrorlabel("");
 				router.push('./home');
 			} else {
 				setErrorlabel("login failed");
