@@ -14,6 +14,7 @@ export interface getfeedinglocationResponse{
 }
 
 export const listFeedingLocations = async () => {
+    console.log("token: "+TOKEN)
     return {
         data: [
         {
@@ -68,49 +69,50 @@ export const listFeedingLocations = async () => {
         ]
     }
 }
-//export const getfeedinglocations = async (): Promise<getfeedinglocationResponse>=> {
-//  try {
-//      console.log("requesting feedinglocations token :" + TOKEN)
-//      const response = await axios.get(API_URL + "/api/v1/location-controller",
-//      {
-//        headers: {
-//          Authorization: `Bearer ${TOKEN}`,
-//        },
-//      });
-//      const locationList = response.data || [];
-//
-//      // this won't be needed when the dtos are done ins the backendside
-//      const updatedLocationList = locationList.map((location: any) => ({
-//        latitude: location.latitude,
-//        longitude: location.longitude,
-//        title: location.title,
-//        description: location.description,
-//        isUser: false,
-//      }));
-//      
-//      console.log("this is the location list",updatedLocationList)
-//      const getfeedinglocationsResponse: getfeedinglocationResponse = {
-//        status: response.status,
-//        data: updatedLocationList,
-//      }
-//
-//      return getfeedinglocationsResponse;
-//  } catch (error) {
-//    if (axios.isAxiosError(error)) {
-//      if (error.response) {
-//        // If the server responded with an error (status code 4xx, 5xx)
-//        console.log("Error:", error.response.data);
-//        return error.response.data;
-//      }
-//      else {
-//        // If the error is a network error (no response)
-//        console.error("Error:", error.message);
-//        throw new Error("Network error: Could not reach server");
-//      }
-//    } else {
-//      // If the error is of a different type (not an AxiosError)
-//      console.error("Unexpected error:", error);
-//      throw new Error("An unexpected error occurred");
-//    }
-//  }
-//}
+export const getfeedinglocations = async (): Promise<getfeedinglocationResponse>=> {
+  try {
+      console.log("requesting feedinglocations token :" + TOKEN)
+      const response = await axios.get(API_URL + "/api/v1/location-controller/getAllLocationsApp",
+      {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      });
+      const locationList = response.data || [];
+
+      // this won't be needed when the dtos are done ins the backendside
+      console.log("location mapping in feedingService")
+      const updatedLocationList = locationList.map((location: any) => ({
+        latitude: location.latitude,
+        longitude: location.longitude,
+        title: location.name,
+        description: location.description,
+        isUser: false,
+      }));
+      
+      console.log("this is the location list",updatedLocationList)
+      const getfeedinglocationsResponse: getfeedinglocationResponse = {
+        status: response.status,
+        data: updatedLocationList,
+      }
+
+      return getfeedinglocationsResponse;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        // If the server responded with an error (status code 4xx, 5xx)
+        console.log("Error:", error.response.data);
+        return error.response.data;
+      }
+      else {
+        // If the error is a network error (no response)
+        console.error("Error:", error.message);
+        throw new Error("Network error: Could not reach server");
+      }
+    } else {
+      // If the error is of a different type (not an AxiosError)
+      console.error("Unexpected error:", error);
+      throw new Error("An unexpected error occurred");
+    }
+  }
+}

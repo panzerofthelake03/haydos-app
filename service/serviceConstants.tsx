@@ -1,4 +1,4 @@
-export const API_URL = "http://192.168.150.2:8088";
+export const API_URL = "http://192.168.1.159:8088";
 export var TOKEN= "";
 
 export const update_TOKEN = (new_TOKEN: string) => {
